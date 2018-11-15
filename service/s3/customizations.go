@@ -45,7 +45,7 @@ func defaultInitRequestFn(r *request.Request) {
 	case opCopyObject, opUploadPartCopy, opCompleteMultipartUpload:
 		r.Handlers.Unmarshal.PushFront(copyMultipartStatusOKUnmarhsalError)
 		r.Handlers.Unmarshal.PushBackNamed(s3err.RequestFailureWrapperHandler())
-	case opPutObject, opUploadPart:
+	case opPutObject, opPutObjectTagging, opUploadPart:
 		r.Handlers.Build.PushBack(computeBodyHashes)
 		// Disabled until #1837 root issue is resolved.
 		//	case opGetObject:
